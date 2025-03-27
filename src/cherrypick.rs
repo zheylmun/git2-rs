@@ -8,8 +8,8 @@ use std::ptr;
 /// Options to specify when cherry picking
 pub struct CherrypickOptions<'cb> {
     mainline: u32,
-    checkout_builder: Option<CheckoutBuilder<'cb>>,
-    merge_opts: Option<MergeOptions>,
+    checkout_builder: Option<&'cb mut CheckoutBuilder<'cb>>,
+    merge_opts: Option<&'cb mut MergeOptions>,
 }
 
 impl<'cb> CherrypickOptions<'cb> {
@@ -31,13 +31,13 @@ impl<'cb> CherrypickOptions<'cb> {
     }
 
     /// Set the checkout builder
-    pub fn checkout_builder(&mut self, cb: CheckoutBuilder<'cb>) -> &mut Self {
+    pub fn checkout_builder(&mut self, cb: &'cb mut CheckoutBuilder<'cb>) -> &mut Self {
         self.checkout_builder = Some(cb);
         self
     }
 
     /// Set the merge options
-    pub fn merge_opts(&mut self, merge_opts: MergeOptions) -> &mut Self {
+    pub fn merge_opts(&mut self, merge_opts: &'cb mut MergeOptions) -> &mut Self {
         self.merge_opts = Some(merge_opts);
         self
     }
